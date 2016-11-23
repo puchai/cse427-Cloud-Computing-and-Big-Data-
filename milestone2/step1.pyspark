@@ -1,0 +1,6 @@
+
+mydata = sc.textFile("file:///home/training/training_materials/data/devicestatus.txt")
+filtered = mydata.map(lambda x: x.split(x[19])).filter(lambda line: len(line) == 14)
+valid = filtered.filter(lambda line: (line[12] != 0 or line[13] != 0))
+processed = valid.map(lambda line: line[12]+','+line[13]+','+line[0]+','+line[1].replace(" ", ",", 1)+','+line[2])
+processed.saveAsTextFile("file:///home/training/training_materials/data/devicePreprocessed")
